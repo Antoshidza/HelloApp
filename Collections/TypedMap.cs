@@ -8,6 +8,7 @@ namespace Source.Core.Collections
         private readonly Dictionary<Type, T> _map;
 
         public T this[Type type] => _map[type];
+        public IReadOnlyDictionary<Type, T> Source => _map;
 
         public TypedMap(in int capacity = 1, params T[] values) : this(values, capacity) { }
 
