@@ -1,0 +1,11 @@
+{
+  "name": "com.tonymax.helloapp",
+  "version": "0.0.1",
+  "displayName": "Hello App",
+  "author": {
+    "name": "TonyMax",
+    "email": "antoshidza@mail.ru"
+  },
+  "type": "library",
+  "hideInEditor": false
+}
