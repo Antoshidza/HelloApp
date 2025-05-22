@@ -9,7 +9,10 @@ namespace Source.Core.Presentation.SceneService
     {
         public async UniTask<Container> LoadSceneWithContainer(string sceneName)
         {
-            await SceneManager.LoadSceneAsync(sceneName, new LoadSceneParameters(LoadSceneMode.Single)).ToUniTask();
+            if(SceneManager.GetActiveScene().name != sceneName)
+                await SceneManager.LoadSceneAsync(sceneName, new LoadSceneParameters(LoadSceneMode.Single)).ToUniTask();
+            else
+                await UniTask.NextFrame(); // wait 1 frame before SceneScope write itself to Reflex scene dictionary
             return SceneManager.GetSceneByName(sceneName).GetSceneContainer();
         }
     }
