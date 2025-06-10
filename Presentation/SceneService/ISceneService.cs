@@ -1,5 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
+using R3;
 using Reflex.Core;
+using UnityEngine;
 
 namespace Source.Core.Presentation.SceneService
 {
@@ -10,6 +12,8 @@ namespace Source.Core.Presentation.SceneService
     /// </summary>
     public interface ISceneService
     {
+        public Observable<AsyncOperation> LoadingOperationStarted { get; }
+
         public UniTask<Container> LoadSceneWithContainer(string sceneName);
     }
 }
