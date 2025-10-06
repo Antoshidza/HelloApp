@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using R3;
 using Source.Core.Collections;
+using UnityEngine.Scripting;
 
 namespace Source.Core.StateMachine
 {
@@ -8,12 +10,16 @@ namespace Source.Core.StateMachine
         where TState : IState
     {
         private readonly TypedMap<TState> _statesMap;
-        private readonly ReactiveProperty<TState> _state = new();
+        private readonly ReactiveProperty<TState> _state;
 
         public ReadOnlyReactiveProperty<TState> State => _state;
 
-        public StateMachine(IEnumerable<TState> states) 
-            => _statesMap = new TypedMap<TState>(states);
+        [Preserve]
+        public StateMachine(IEnumerable<TState> states)
+        {
+            _statesMap = new TypedMap<TState>(states);
+            _state = new();
+        }
 
         public void Start<TStateConcrete>()
             where TStateConcrete : TState
@@ -44,6 +50,9 @@ namespace Source.Core.StateMachine
 
         private void SetNewState(TState state)
         {
+            if (state == null)
+                throw new ArgumentException($"{nameof(state)} you want to set as new can't be null");
+            
             _state.Value = state;
             state.OnEnter();
         }
